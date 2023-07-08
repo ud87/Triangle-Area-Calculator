@@ -1,0 +1,144 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--https://www.w3resource.com/javascript-exercises/
+    Write a JavaScript program to find the area of a triangle where 
+    lengths of the three of its sides are 5, 6, 7
+    -->
+<head>
+    <title>Triangle Area Calculator</title>
+    <style>
+        /*CSS styling comment*/
+        .container {
+            display: flex;              /*to make divs under it in-line*/
+            height: 100%;
+            padding: 2.5%;
+        }
+
+
+        .calculate {
+            background-color: burlywood;
+            height: 50%;
+            width: 30%;
+            position: relative;
+        }
+
+
+        .result {
+            display: flex;      /*allows horizontally align resultHolder & resultValue*/
+            position: absolute;     /*allows to set absolute position relative to .calculate*/
+            top: 50%;
+            left: 25%;
+            width: 50%;
+            text-align: center;
+
+        }
+
+        input[name="resultValue"]{
+            width: 70%;
+            text-align: center;
+        }
+
+        button {
+            position: absolute;
+            top: 30%;
+            left: 25%;
+            width: 50%;
+        }
+
+        .image { /*Image div*/
+            background-color: lightblue;
+            height: 50%;
+            width: 70%;
+            position: relative;
+        }
+
+        img { /*This is the actual image*/
+            height: 100%; /*Used to scale image inside div*/
+            width: 100%;
+            object-fit: contain; /*Does not allow to get outside of div*/
+        }
+
+        
+        input[name="side1"] {
+            position: absolute;
+            top: 40%;
+            left: 2.5%;
+            width: 20%;
+            text-align: center;
+        }
+
+        input[name="side2"] {
+            position: absolute;
+            top: 40%;
+            right: 2.5%;
+            width: 20%;
+            text-align: center;
+        }
+
+        input[name="side3"] {
+            position: absolute;
+            top: 100%;
+            left: 40%;
+            width: 20%;
+            text-align: center;
+        }
+
+        ::-webkit-input-placeholder { /*to centre a placeholder*/
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="calculate">
+            <button onclick="areaTriangle()">Press to calculate Area</button>
+            
+            <div class="result">                                                        <!--div created so we can align resultHolder and resultValue horizontally-->
+                <p class="resultHolder">Result: </p>
+                <input type="text" name="resultValue" value="" />                       <!--this is where text will be displayed-->
+            </div>
+            
+        </div>
+        <div class="image">
+            <img src="images/vecteezy_triangle_1200691.png" alt="triangle" />           <!--Triangle image-->
+  
+            <input type="text" name="side1" placeholder="Side 1" value="" />            <!--Text area where user will input value-->
+            <input type="text" name="side2" placeholder="Side 2" value="" />
+            <input type="text" name="side3" placeholder="Side 3" value="" />
+            
+            
+        </div>
+    </div>
+
+    <script>
+        function areaTriangle() {
+            let side1 = parseFloat(document.getElementsByName("side1")[0].value);           /*paseFloat converts to number, getElementsByName() returns a NodeList, which is an array-like object 
+             that contains all the elements with the specified name attribute. Since we only have one element with the name "side1", we can use [0] to select it.*/
+            //console.log(side1);
+            let side2 = parseFloat(document.getElementsByName("side2")[0].value);
+            //console.log(side2);
+            let side3 = parseFloat(document.getElementsByName("side3")[0].value);
+            //console.log(side3);
+
+            if (isNaN(side1) || isNaN(side2) || isNaN(side3)) {                     //If number is left blank on side1 - side3
+                alert("Please enter valid numbers for all three sides.");
+                return;
+            } else if (side1 + side2 <= side3 || side1 + side3 <= side2 || side2 + side3 <= side1) {           
+                alert("Sum of two sides should be greater than third side.");
+                return;
+            }
+
+            let s = (side1 + side2 + side3) / 2;                                    //calculate perimeter for Heron's formula
+            //console.log(s);
+            let area = Math.sqrt(s * (s - side1) * (s - side2) * (s - side3));      //Heron's formula
+            let areaRounded = area.toFixed(3);                                      //rounded to 3 decimal places
+            
+            document.getElementsByName("resultValue")[0].value = areaRounded;       //assigns areaRounded to the value of resultValue textbox 
+        }
+
+
+
+    </script>
+
+
+</body>
+</html>
